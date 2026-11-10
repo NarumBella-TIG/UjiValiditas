@@ -7,8 +7,8 @@ Tugas mata kuliah **Probabilitas dan Statistika**, Program Studi Teknik Informat
 **M. Narum Bella** (2455301225), 3 TI F
 
 Uji validitas (korelasi Pearson butir-total, r tabel pada α = 0,05) dan reliabilitas (Cronbach's alpha) terhadap
-kuesioner penggunaan AI, kebiasaan teknologi digital, prokrastinasi akademik, dan respon emosional, khusus
-responden kelas 3 TI F (n = 30, 5 dimensi, 29 butir).
+*Kuesioner Penggunaan AI dan Lifestyle Media Sosial Mahasiswa*, dengan responden kelas 3 TI F
+(n = 30, 5 dimensi, 29 butir).
 
 ## Isi
 
@@ -28,13 +28,13 @@ Langkah 2. File `hasil_uji_validitas_reliabilitas.xlsx` akan terunduh otomatis d
 
 | Dimensi | Butir | Cronbach's alpha | Kategori |
 | --- | --- | --- | --- |
-| Penggunaan AI | 7 | 0,625 | Tidak reliabel |
-| Aspek Psikologis | 7 | 0,643 | Tidak reliabel |
-| Kebiasaan Teknologi Digital | 6 | 0,674 | Tidak reliabel |
-| Prokrastinasi Akademik | 4 | 0,900 | Sangat baik |
-| Respon Emosional | 5 | 0,764 | Reliabel |
+| Penggunaan AI | 7 | 0,799 | Reliabel |
+| Aspek Psikologis | 7 | 0,886 | Baik |
+| Kebiasaan Teknologi Digital | 6 | 0,890 | Baik |
+| Prokrastinasi Akademik | 4 | 0,860 | Baik |
+| Respon Emosional | 5 | 0,928 | Sangat baik |
 
-Seluruh 29 butir valid (r hitung > r tabel 0,361).
+Seluruh 29 butir valid (r hitung > r tabel 0,361) dan kelima dimensi reliabel (α ≥ 0,70).
 
 ## Penggunaan AI
 

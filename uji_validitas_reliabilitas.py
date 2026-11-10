@@ -3,13 +3,12 @@
 #
 # **Probabilitas dan Statistika** · M. Narum Bella (2455301225) · 3 TI F · Politeknik Caltex Riau
 #
-# Data: respons kuesioner penggunaan AI, kebiasaan digital, prokrastinasi akademik, dan respon emosional
-# **khusus kelas 3 TI F** (`Dataset_Kuesioner_3TIF.xlsx`, jawaban masih berupa label seperti "Setuju (S)").
+# Data: respons Google Form **"Kuesioner Penggunaan AI dan Lifestyle Media Sosial Mahasiswa"** dari
+# **kelas 3 TI F** (`Dataset_Kuesioner_3TIF.xlsx`, jawaban masih berupa label seperti "Setuju (S)").
 #
-# Langkah 1-8 mengikuti modul, dengan dua penyesuaian terhadap data:
-# - kolom demografi berjumlah 6 (Timestamp, Score, Kelas, Jenis Kelamin, dan 2 kolom jumlah platform AI);
-# - kolom "Durasi (jam) rata-rata penggunaan gadget" berada di tengah butir tetapi bukan butir Likert,
-#   sehingga dikeluarkan dari analisis.
+# Langkah 1-8 mengikuti modul. Satu penyesuaian terhadap data: kolom "durasi rata-rata penggunaan gadget"
+# berada sesudah kolom demografi tetapi bukan butir Likert (isinya "4 – 7 jam", dst.), sehingga dikeluarkan
+# dari analisis.
 
 # %% [markdown]
 # ## Langkah 1: Persiapan lingkungan dan impor pustaka
@@ -37,13 +36,13 @@ print("File terbaca:", nama_file)
 # ## Langkah 3: Membaca data dan memisahkan butir
 
 # %%
-JUMLAH_KOLOM_DEMOGRAFI = 6   # Timestamp, Score, Kelas, Jenis Kelamin, 2 kolom jumlah platform AI
+JUMLAH_KOLOM_DEMOGRAFI = 5   # Timestamp, Kelas, Jenis Kelamin, 2 kolom jumlah platform AI
 
 df = pd.read_excel(nama_file)
 df = df[df["Kelas"].astype(str).str.strip() == "3 TI F"].reset_index(drop=True)   # analisis khusus 3 TI F
 butir = df.iloc[:, JUMLAH_KOLOM_DEMOGRAFI:]
 
-# Kolom durasi gadget bukan butir Likert (isinya "4 - 7 jam", dst.), jadi dikeluarkan
+# Kolom durasi gadget bukan butir Likert (isinya "4 – 7 jam", dst.), jadi dikeluarkan
 kolom_bukan_butir = [k for k in butir.columns if not re.match(r"^(.*?) \[", k)]
 print("Kolom non-butir yang dikeluarkan:", kolom_bukan_butir)
 butir = butir.drop(columns=kolom_bukan_butir)
