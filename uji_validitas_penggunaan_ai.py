@@ -1,10 +1,13 @@
 # %% [markdown]
-# # Pengujian Validitas dan Reliabilitas Instrumen
+# # Pengujian Validitas dan Reliabilitas Instrumen: Bagian Penggunaan AI pada Tugas atau Projek Kuliah
 #
 # **Probabilitas dan Statistika** · M. Narum Bella (2455301225) · 3 TI F · Politeknik Caltex Riau
 #
 # Data: respons Google Form **"Kuesioner Penggunaan AI dan Lifestyle Media Sosial Mahasiswa"** dari
 # **kelas 3 TI F** (`Dataset_Kuesioner_3TIF.xlsx`, jawaban masih berupa label seperti "Setuju (S)").
+#
+# Kuesioner terdiri atas dua bagian. Notebook ini menganalisis **bagian Penggunaan AI pada Tugas atau Projek Kuliah**
+# (dimensi Penggunaan AI dan Aspek Psikologis penggunaan AI).
 #
 # Langkah 1-8 mengikuti modul. Satu penyesuaian terhadap data: kolom "durasi rata-rata penggunaan gadget"
 # berada sesudah kolom demografi tetapi bukan butir Likert (isinya "4 – 7 jam", dst.), sehingga dikeluarkan
@@ -47,6 +50,17 @@ kolom_bukan_butir = [k for k in butir.columns if not re.match(r"^(.*?) \[", k)]
 print("Kolom non-butir yang dikeluarkan:", kolom_bukan_butir)
 butir = butir.drop(columns=kolom_bukan_butir)
 
+# Kuesioner terdiri atas 2 bagian; hanya dimensi pada bagian yang dipilih yang dianalisis
+BAGIAN = "Penggunaan AI"
+DIMENSI_BAGIAN = {
+    "Penggunaan AI": ["Penggunaan AI pada tugas atau projek kuliah",
+                      "Aspek Psikologis penggunaan AI pada tugas atau projek kuliah"],
+    "Lifestyle Media Sosial": ["Kebiasaan penggunaan teknologi digital", "Prokrastinasi akademik", "Respon emosional"],
+}
+butir = butir[[k for k in butir.columns
+               if re.match(r"^(.*?) \[", k).group(1).strip().rstrip(".") in DIMENSI_BAGIAN[BAGIAN]]]
+print("Bagian kuesioner :", BAGIAN)
+
 print("Jumlah responden :", len(df))
 print("Jumlah butir     :", butir.shape[1])
 print("Data kosong      :", int(butir.isna().sum().sum()))
@@ -70,7 +84,7 @@ num = butir.replace(skala).apply(pd.to_numeric, errors="coerce")
 # Harus 0. Jika lebih dari 0, ada jawaban yang tidak terbaca.
 print("Sel yang gagal dikonversi:", int(num.isna().sum().sum()))
 print("Nilai yang muncul:", sorted(int(v) for v in pd.unique(num.values.ravel())))
-# 5 responden pertama; judul kolom disingkat K1-K29 agar tabel muat di layar
+# 5 responden pertama; judul kolom disingkat K1, K2, dst. agar tabel muat di layar
 num.head().set_axis([f"K{i}" for i in range(1, num.shape[1] + 1)], axis=1)
 
 # %% [markdown]
@@ -186,14 +200,16 @@ def keputusan(baris):
 gabung["Keputusan"] = gabung.apply(keputusan, axis=1)
 gabung = gabung.merge(kamus_butir, on=["Dimensi", "Butir"])
 
-with pd.ExcelWriter("hasil_uji_validitas_reliabilitas.xlsx") as w:
+FILE_HASIL = "hasil_uji_penggunaan_ai.xlsx"
+
+with pd.ExcelWriter(FILE_HASIL) as w:
     gabung.to_excel(w, sheet_name="Validitas", index=False)
     tabel_reliabilitas.to_excel(w, sheet_name="Reliabilitas", index=False)
 
 try:
-    files.download("hasil_uji_validitas_reliabilitas.xlsx")
+    files.download(FILE_HASIL)
 except NameError:
-    print("Tersimpan: hasil_uji_validitas_reliabilitas.xlsx")
+    print("Tersimpan:", FILE_HASIL)
 gabung[["Dimensi", "Butir", "r hitung", "Corrected r", "Alpha jika dihapus", "Keputusan"]]
 
 # %% [markdown]
